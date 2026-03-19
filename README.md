@@ -1,2 +1,1 @@
 # bridge-pay-server
-testing
