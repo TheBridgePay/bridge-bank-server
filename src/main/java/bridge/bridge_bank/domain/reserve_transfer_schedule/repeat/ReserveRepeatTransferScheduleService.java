@@ -1,8 +1,8 @@
-package bridge.bridge_bank.domain.transfer.reserve.repeat;
+package bridge.bridge_bank.domain.reserve_transfer_schedule.repeat;
 
-import bridge.bridge_bank.domain.transfer.reserve.repeat.entity.ReserveRepeatTransferSchedule;
-import bridge.bridge_bank.domain.transfer.reserve.repeat.repository.ReserveRepeatTransferScheduleQueryRepository;
-import bridge.bridge_bank.domain.transfer.reserve.repeat.repository.ReserveRepeatTransferScheduleRepository;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.ReserveRepeatTransferSchedule;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.repository.ReserveRepeatTransferScheduleQueryRepository;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.repository.ReserveRepeatTransferScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,6 +2,7 @@ package bridge.bridge_bank.domain.transfer_transaction;
 
 import bridge.bridge_bank.domain.transfer_transaction.dto.TransferTransactionResultTargetOption;
 import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionResult;
+import bridge.bridge_bank.domain.transfer_transaction.repository.TransferTransactionResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

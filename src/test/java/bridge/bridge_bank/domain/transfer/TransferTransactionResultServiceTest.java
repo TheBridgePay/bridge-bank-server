@@ -1,6 +1,6 @@
 package bridge.bridge_bank.domain.transfer;
 
-import bridge.bridge_bank.domain.transfer_transaction.TransferTransactionResultRepository;
+import bridge.bridge_bank.domain.transfer_transaction.repository.TransferTransactionResultRepository;
 import bridge.bridge_bank.domain.transfer_transaction.TransferTransactionResultService;
 import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionResult;
 import org.junit.jupiter.api.Test;

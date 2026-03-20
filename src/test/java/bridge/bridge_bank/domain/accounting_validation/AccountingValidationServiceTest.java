@@ -2,7 +2,7 @@ package bridge.bridge_bank.domain.accounting_validation;
 
 import bridge.bridge_bank.domain.ledger.entity.LedgerEntryType;
 import bridge.bridge_bank.domain.ledger.repository.LedgerQueryRepository;
-import bridge.bridge_bank.domain.transfer_transaction.TransferTransactionResultQueryRepository;
+import bridge.bridge_bank.domain.transfer_transaction.repository.TransferTransactionResultQueryRepository;
 import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
