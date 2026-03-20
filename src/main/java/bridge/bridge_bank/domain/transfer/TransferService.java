@@ -83,4 +83,130 @@ public class TransferService {
                 TransferTransactionType.SIMPLE_TRANSFER_IN
         );
     }
+
+    @Transactional
+    public void reserveOnceTransferNow(TransferRequest transferRequest) {
+        if(transferRequest.getSenderAccount().equals(transferRequest.getReceiverAccount())) {
+            throw new IllegalArgumentException("Sender and Receiver account cannot be the same");
+        }
+
+        Account senderAccount = accountService.getAccount(transferRequest.getSenderAccount())
+                .orElseThrow(() -> new IllegalArgumentException("Sender account not found"));
+
+        Account receiverAccount = accountService.getAccount(transferRequest.getReceiverAccount())
+                .orElseThrow(() -> new IllegalArgumentException("Receiver account not found"));
+
+        if(!senderAccount.getPassword().equals(transferRequest.getReceiverAccount())) {
+            throw new IllegalArgumentException("sender password not match");
+        }
+
+        if (senderAccount.getBalance().compareTo(transferRequest.getTransferAmount()) < 0) {
+            throw new IllegalArgumentException("sender balance not enough");
+        }
+
+        BigDecimal newSenderAccountBalance = senderAccount.getBalance().subtract(transferRequest.getTransferAmount());
+        BigDecimal newReceiverAccountBalance = receiverAccount.getBalance().add(transferRequest.getTransferAmount());
+
+        accountService.updateAccountBalanceBoth(
+                transferRequest.getSenderAccount(),newSenderAccountBalance,
+                transferRequest.getReceiverAccount(),newReceiverAccountBalance
+        );
+
+        String transferTransactionGroupId= UUID.randomUUID().toString();
+        TransferTransactionResult senderTransferTransactionResult = TransferTransactionResult.create(
+                transferTransactionGroupId,
+                TransferTransactionResultStatus.SUCCESS,
+                TransferTransactionType.RESERVE_ONCE_OUT,
+                transferRequest.getTransferAmount(),
+                senderAccount.getBalance(),
+                newSenderAccountBalance,
+                senderAccount.getAccountNumber(),
+                receiverAccount.getAccountNumber()
+        );
+        TransferTransactionResult receiverTransferTransactionResult = TransferTransactionResult.create(
+                transferTransactionGroupId,
+                TransferTransactionResultStatus.SUCCESS,
+                TransferTransactionType.RESERVE_ONCE_IN,
+                transferRequest.getTransferAmount(),
+                receiverAccount.getBalance(),
+                newReceiverAccountBalance,
+                receiverAccount.getAccountNumber(),
+                senderAccount.getAccountNumber()
+        );
+
+        transferTransactionResultService.saveTransferTransactionResultBoth(
+                senderTransferTransactionResult,
+                receiverTransferTransactionResult
+        );
+
+        ledgerService.recordForTransfer(
+                transferRequest.getTransferAmount(),
+                transferTransactionGroupId,
+                TransferTransactionType.RESERVE_ONCE_OUT,
+                TransferTransactionType.RESERVE_ONCE_IN
+        );
+    }
+
+    @Transactional
+    public void reserveRepeatTransferNow(TransferRequest transferRequest) {
+        if(transferRequest.getSenderAccount().equals(transferRequest.getReceiverAccount())) {
+            throw new IllegalArgumentException("Sender and Receiver account cannot be the same");
+        }
+
+        Account senderAccount = accountService.getAccount(transferRequest.getSenderAccount())
+                .orElseThrow(() -> new IllegalArgumentException("Sender account not found"));
+
+        Account receiverAccount = accountService.getAccount(transferRequest.getReceiverAccount())
+                .orElseThrow(() -> new IllegalArgumentException("Receiver account not found"));
+
+        if(!senderAccount.getPassword().equals(transferRequest.getReceiverAccount())) {
+            throw new IllegalArgumentException("sender password not match");
+        }
+
+        if (senderAccount.getBalance().compareTo(transferRequest.getTransferAmount()) < 0) {
+            throw new IllegalArgumentException("sender balance not enough");
+        }
+
+        BigDecimal newSenderAccountBalance = senderAccount.getBalance().subtract(transferRequest.getTransferAmount());
+        BigDecimal newReceiverAccountBalance = receiverAccount.getBalance().add(transferRequest.getTransferAmount());
+
+        accountService.updateAccountBalanceBoth(
+                transferRequest.getSenderAccount(),newSenderAccountBalance,
+                transferRequest.getReceiverAccount(),newReceiverAccountBalance
+        );
+
+        String transferTransactionGroupId= UUID.randomUUID().toString();
+        TransferTransactionResult senderTransferTransactionResult = TransferTransactionResult.create(
+                transferTransactionGroupId,
+                TransferTransactionResultStatus.SUCCESS,
+                TransferTransactionType.RESERVE_REPEAT_OUT,
+                transferRequest.getTransferAmount(),
+                senderAccount.getBalance(),
+                newSenderAccountBalance,
+                senderAccount.getAccountNumber(),
+                receiverAccount.getAccountNumber()
+        );
+        TransferTransactionResult receiverTransferTransactionResult = TransferTransactionResult.create(
+                transferTransactionGroupId,
+                TransferTransactionResultStatus.SUCCESS,
+                TransferTransactionType.RESERVE_REPEAT_IN,
+                transferRequest.getTransferAmount(),
+                receiverAccount.getBalance(),
+                newReceiverAccountBalance,
+                receiverAccount.getAccountNumber(),
+                senderAccount.getAccountNumber()
+        );
+
+        transferTransactionResultService.saveTransferTransactionResultBoth(
+                senderTransferTransactionResult,
+                receiverTransferTransactionResult
+        );
+
+        ledgerService.recordForTransfer(
+                transferRequest.getTransferAmount(),
+                transferTransactionGroupId,
+                TransferTransactionType.RESERVE_REPEAT_OUT,
+                TransferTransactionType.RESERVE_REPEAT_IN
+        );
+    }
 }
