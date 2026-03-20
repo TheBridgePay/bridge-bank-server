@@ -22,10 +22,31 @@ public class LedgerEntry {
     @Enumerated(EnumType.STRING)
     private LedgerEntryType ledgerEntryType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
+    private LedgerBankAssetType ledgerBankAssetType;
+
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ledger_voucher_id")
     private LedgerVoucher ledgerVoucher;
 
-    @Enumerated(EnumType.STRING)
-    private BankAssetType bankAssetType;
+    public void bindWithLedgerVoucher(LedgerVoucher ledgerVoucher) {
+        this.ledgerVoucher = ledgerVoucher;
+        ledgerVoucher.getLedgerEntries().add(this);
+    }*/
+
+    private Long ledgerVoucherId;
+
+    public static LedgerEntry create(
+            BigDecimal amount,
+            LedgerEntryType ledgerEntryType,
+            LedgerBankAssetType ledgerBankAssetType,
+            Long ledgerVoucherId
+    ) {
+        return LedgerEntry.builder()
+                .amount(amount)
+                .ledgerEntryType(ledgerEntryType)
+                .ledgerBankAssetType(ledgerBankAssetType)
+                .ledgerVoucherId(ledgerVoucherId)
+                .build();
+    }
 }

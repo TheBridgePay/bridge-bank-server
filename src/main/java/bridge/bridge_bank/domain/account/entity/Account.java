@@ -31,11 +31,10 @@ public class Account {
 
     public static Account create(
             String memberName,
-            String password,
-            BigDecimal balance
+            String password
     ) {
         return Account.builder()
-                .accountNumber(""+System.currentTimeMillis())
+                .accountNumber(""+System.currentTimeMillis()+Math.floor(Math.random()*10))
                 .memberName(memberName)
                 .password(password)
                 .balance(

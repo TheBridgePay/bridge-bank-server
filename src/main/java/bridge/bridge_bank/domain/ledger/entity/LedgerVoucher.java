@@ -22,12 +22,23 @@ public class LedgerVoucher {
 
     private LocalDateTime ledgerVoucherDate;
 
-    private String transactionGroupId;
+    private String transferTransactionGroupId;
 
     @Enumerated(EnumType.STRING)
     private TransferTransactionType transferTransactionType;
 
-    @OneToMany(mappedBy = "ledgerVoucher",fetch = FetchType.LAZY)
-    @BatchSize(size=4)
-    private List<LedgerEntry> ledgerEntries;
+    /*@OneToMany(mappedBy = "ledgerVoucher",fetch = FetchType.LAZY)
+    @BatchSize(size=400)
+    private List<LedgerEntry> ledgerEntries;*/
+
+    public static LedgerVoucher create(
+            String transferTransactionGroupId,
+            TransferTransactionType transferTransactionType
+    ) {
+        return LedgerVoucher.builder()
+                .ledgerVoucherDate(LocalDateTime.now())
+                .transferTransactionGroupId(transferTransactionGroupId)
+                .transferTransactionType(transferTransactionType)
+                .build();
+    }
 }
