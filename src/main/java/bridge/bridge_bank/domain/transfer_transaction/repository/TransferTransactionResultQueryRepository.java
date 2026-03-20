@@ -1,8 +1,7 @@
-package bridge.bridge_bank.domain.transfer;
+package bridge.bridge_bank.domain.transfer_transaction.repository;
 
-import bridge.bridge_bank.domain.ledger.entity.LedgerEntryType;
-import bridge.bridge_bank.domain.transfer.entity.QTransferTransactionResult;
-import bridge.bridge_bank.domain.transfer.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction.entity.QTransferTransactionResult;
+import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

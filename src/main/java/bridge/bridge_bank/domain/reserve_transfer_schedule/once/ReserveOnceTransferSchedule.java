@@ -1,11 +1,10 @@
-package bridge.bridge_bank.domain.transfer.reserve.once;
+package bridge.bridge_bank.domain.reserve_transfer_schedule.once;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

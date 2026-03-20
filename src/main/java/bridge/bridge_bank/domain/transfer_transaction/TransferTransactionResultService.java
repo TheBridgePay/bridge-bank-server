@@ -1,13 +1,12 @@
-package bridge.bridge_bank.domain.transfer;
+package bridge.bridge_bank.domain.transfer_transaction;
 
-import bridge.bridge_bank.domain.transfer.dto.TransferTransactionResultTargetOption;
-import bridge.bridge_bank.domain.transfer.entity.TransferTransactionResult;
-import bridge.bridge_bank.domain.transfer.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction.dto.TransferTransactionResultTargetOption;
+import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionResult;
+import bridge.bridge_bank.domain.transfer_transaction.repository.TransferTransactionResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service

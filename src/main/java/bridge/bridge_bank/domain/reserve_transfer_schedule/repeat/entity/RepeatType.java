@@ -1,4 +1,4 @@
-package bridge.bridge_bank.domain.transfer.reserve.repeat;
+package bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity;
 
 public enum RepeatType {
     MONTHLY,

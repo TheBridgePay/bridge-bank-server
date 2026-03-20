@@ -1,12 +1,11 @@
 package bridge.bridge_bank.domain.ledger;
 
-import bridge.bridge_bank.domain.ledger.entity.LedgerBankAssetType;
 import bridge.bridge_bank.domain.ledger.entity.LedgerEntry;
 import bridge.bridge_bank.domain.ledger.entity.LedgerEntryType;
 import bridge.bridge_bank.domain.ledger.entity.LedgerVoucher;
 import bridge.bridge_bank.domain.ledger.repository.LedgerEntryRepository;
 import bridge.bridge_bank.domain.ledger.repository.LedgerVoucherRepository;
-import bridge.bridge_bank.domain.transfer.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
