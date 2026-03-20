@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,6 +17,8 @@ public class TransferTransactionResult {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transfer_transaction_result_id")
     private Long id;
+
+    private LocalDateTime transferTransactionDate;
 
     private String transferTransactionGroupId;
 
@@ -46,6 +49,7 @@ public class TransferTransactionResult {
             String receiverAccountNumber
     ){
         return TransferTransactionResult.builder()
+                .transferTransactionDate(LocalDateTime.now())
                 .transferTransactionGroupId(transferTransactionGroupId)
                 .transferTransactionResultStatus(transferTransactionResultStatus)
                 .transferTransactionType(transferTransactionType)

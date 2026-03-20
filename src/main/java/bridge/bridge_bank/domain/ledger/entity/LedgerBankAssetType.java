@@ -1,6 +1,6 @@
 package bridge.bridge_bank.domain.ledger.entity;
 
-public enum BankAssetType {
+public enum LedgerBankAssetType {
     ASSET,
     DEBT
 }

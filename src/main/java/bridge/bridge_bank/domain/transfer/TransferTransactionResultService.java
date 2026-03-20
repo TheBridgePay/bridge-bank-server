@@ -22,20 +22,6 @@ public class TransferTransactionResultService {
         transactionResultRepository.saveAll(transferTransactionResults);
     }
 
-    @Transactional(readOnly = true)
-    public BigDecimal getSumByTransferTransactionType(
-            TransferTransactionType transferTransactionType,
-            List<TransferTransactionResult> transferTransactionResults
-    ){
-        return transferTransactionResults.stream()
-                .filter(t ->
-                        t.getTransferTransactionType() == transferTransactionType
-                                && t.getTransferAmount() != null
-                )
-                .map(TransferTransactionResult::getTransferAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
     //todo:유형별 최근 계좌 거래 내역 10개 조회 기능 은서한테 맡기기
     @Transactional(readOnly = true)
     public List<TransferTransactionResult> get10TransferTransactionResults(
