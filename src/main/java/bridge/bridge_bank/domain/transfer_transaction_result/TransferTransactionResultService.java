@@ -1,8 +1,8 @@
-package bridge.bridge_bank.domain.transfer_transaction;
+package bridge.bridge_bank.domain.transfer_transaction_result;
 
-import bridge.bridge_bank.domain.transfer_transaction.dto.TransferTransactionResultTargetOption;
-import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionResult;
-import bridge.bridge_bank.domain.transfer_transaction.repository.TransferTransactionResultRepository;
+import bridge.bridge_bank.domain.transfer_transaction_result.dto.TransferTransactionResultTargetOption;
+import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionResult;
+import bridge.bridge_bank.domain.transfer_transaction_result.repository.TransferTransactionResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -6,7 +6,7 @@ import bridge.bridge_bank.domain.ledger.entity.LedgerEntryType;
 import bridge.bridge_bank.domain.ledger.entity.LedgerVoucher;
 import bridge.bridge_bank.domain.ledger.repository.LedgerEntryRepository;
 import bridge.bridge_bank.domain.ledger.repository.LedgerVoucherRepository;
-import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

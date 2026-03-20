@@ -1,6 +1,6 @@
 package bridge.bridge_bank.domain.ledger.entity;
 
-import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionType;
 import jakarta.persistence.*;
 import lombok.*;
 
