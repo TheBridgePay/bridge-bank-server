@@ -2,12 +2,9 @@ package bridge.bridge_bank.domain.accounting_validation;
 
 import bridge.bridge_bank.domain.transfer.entity.TransferTransactionType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 @Component
 @RequiredArgsConstructor
