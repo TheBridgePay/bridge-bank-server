@@ -1,10 +1,9 @@
 package bridge.bridge_bank.domain.transfer.reserve.repeat.repository;
 
 import bridge.bridge_bank.domain.transfer.reserve.repeat.QReserveRepeatTransferSchedule;
-import bridge.bridge_bank.domain.transfer.reserve.repeat.ReserveRepeatTransferSchedule;
+import bridge.bridge_bank.domain.transfer.reserve.repeat.entity.ReserveRepeatTransferSchedule;
 import bridge.bridge_bank.domain.transfer.reserve.repeat.ReserveRepeatTransferScheduleTargetOption;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package bridge.bridge_bank.domain.transfer.reserve.repeat;
+package bridge.bridge_bank.domain.transfer.reserve.repeat.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

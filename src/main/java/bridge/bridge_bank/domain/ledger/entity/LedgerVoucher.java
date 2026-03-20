@@ -1,12 +1,10 @@
 package bridge.bridge_bank.domain.ledger.entity;
 
-import bridge.bridge_bank.domain.transfer.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
