@@ -2,7 +2,7 @@ package bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.repository;
 
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.QReserveRepeatTransferSchedule;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.ReserveRepeatTransferSchedule;
-import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.ReserveRepeatTransferScheduleTargetOption;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.dto.ReserveRepeatTransferScheduleTargetOption;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
