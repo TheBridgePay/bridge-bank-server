@@ -25,10 +25,11 @@ public class LedgerService {
     public void recordForTransfer(
             BigDecimal transferAmount,
             String transferTransactionGroupId,
-            TransferTransactionType transferTransactionType
+            TransferTransactionType senderTransferTransactionType,
+            TransferTransactionType receiverTransferTransactionType
     ){
-        LedgerVoucher ledgerVoucher1 =createAndSaveLedgerVoucher(transferTransactionGroupId, transferTransactionType);
-        LedgerVoucher ledgerVoucher2 =createAndSaveLedgerVoucher(transferTransactionGroupId, transferTransactionType);
+        LedgerVoucher ledgerVoucher1 =createAndSaveLedgerVoucher(transferTransactionGroupId, senderTransferTransactionType);
+        LedgerVoucher ledgerVoucher2 =createAndSaveLedgerVoucher(transferTransactionGroupId, receiverTransferTransactionType);
         List<LedgerEntry> ledgerEntries = new ArrayList<>();
 
         LedgerEntry ledgerEntryDebitForLedgerVoucher1 = LedgerEntry.create(
