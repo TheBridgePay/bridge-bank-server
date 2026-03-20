@@ -11,7 +11,14 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> getAccountByAccountNumber(String accountNumber);
 
-    @Modifying(flushAutomatically = true)
-    @Query(value = "update Account a set a.balance=:amount where a.accountNumber=:accountNumber")
-    void updateBalance(String accountNumber, BigDecimal amount);
+    @Modifying
+    @Query(value = "update Account a " +
+            "set a.balance= case " +
+            "when a.accountNumber=:senderAccountNumber then :senderNewBalance " +
+            "when a.accountNumber=:receiverAccountNumber then :receiverNewBalance " +
+            "end where a.accountNumber in (:senderAccountNumber, :receiverAccountNumber)")
+    void updateBalanceBoth(
+            String senderAccountNumber, BigDecimal senderNewBalance,
+            String receiverAccountNumber, BigDecimal receiverNewBalance
+    );
 }

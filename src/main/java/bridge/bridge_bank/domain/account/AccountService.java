@@ -24,12 +24,18 @@ public class AccountService {
         return getAccount(accountNumber).isPresent();
     }
 
-    public Optional<Account> getAccount(String accountNumber){
+    public Optional<Account> getAccount(String accountNumber) {
         return accountRepository.getAccountByAccountNumber(accountNumber);
     }
 
     @Transactional
-    public void updateAccountBalance(String accountNumber, BigDecimal amount) {
-        accountRepository.updateBalance(accountNumber,amount);
+    public void updateAccountBalanceBoth(
+            String senderAccountNumber, BigDecimal senderNewBalance,
+            String receiverAccountNumber, BigDecimal receiverNewBalance
+    ) {
+        accountRepository.updateBalanceBoth(
+                senderAccountNumber, senderNewBalance,
+                receiverAccountNumber, receiverNewBalance
+        );
     }
 }

@@ -15,8 +15,12 @@ public class AccountingValidationScheduler {
 
     @Scheduled(cron = "0 0 4  * * *")
     public void runAccountingValidationJob() {
-        accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.SIMPLE_TRANSFER);
-        accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.RESERVE_ONCE);
-        accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.RESERVE_REPEAT);
+        accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.SIMPLE_TRANSFER_IN);
+        accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.RESERVE_ONCE_IN);
+        accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.RESERVE_REPEAT_IN);
+
+        accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.SIMPLE_TRANSFER_OUT);
+        accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.RESERVE_ONCE_OUT);
+        accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.RESERVE_REPEAT_OUT);
     }
 }

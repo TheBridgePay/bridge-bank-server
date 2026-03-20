@@ -34,19 +34,19 @@ public class TransferTransactionResult {
 
     private BigDecimal afterBalance;
 
-    private String senderAccountNumber;
+    private String selfAccountNumber;
 
-    private String receiverAccountNumber;
+    private String otherAccountNumber;
 
-    public TransferTransactionResult create(
+    public static TransferTransactionResult create(
             String transferTransactionGroupId,
             TransferTransactionResultStatus transferTransactionResultStatus,
             TransferTransactionType transferTransactionType,
             BigDecimal transferAmount,
             BigDecimal beforeBalance,
             BigDecimal afterBalance,
-            String senderAccountNumber,
-            String receiverAccountNumber
+            String selfAccountNumber,
+            String otherAccountNumber
     ){
         return TransferTransactionResult.builder()
                 .transferTransactionDate(LocalDateTime.now())
@@ -56,8 +56,8 @@ public class TransferTransactionResult {
                 .transferAmount(transferAmount)
                 .beforeBalance(beforeBalance)
                 .afterBalance(afterBalance)
-                .senderAccountNumber(senderAccountNumber)
-                .receiverAccountNumber(receiverAccountNumber)
+                .selfAccountNumber(selfAccountNumber)
+                .otherAccountNumber(otherAccountNumber)
                 .build();
     }
 }

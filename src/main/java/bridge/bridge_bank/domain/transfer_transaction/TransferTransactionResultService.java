@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,9 +16,13 @@ public class TransferTransactionResultService {
     private final TransferTransactionResultRepository transactionResultRepository;
 
     @Transactional
-    public void insertTransferTransactionResults(
-            List<TransferTransactionResult> transferTransactionResults
+    public void saveTransferTransactionResultBoth(
+            TransferTransactionResult transferTransactionResult1,
+            TransferTransactionResult transferTransactionResult2
     ) {
+        List<TransferTransactionResult> transferTransactionResults = new ArrayList<>();
+        transferTransactionResults.add(transferTransactionResult1);
+        transferTransactionResults.add(transferTransactionResult2);
         transactionResultRepository.saveAll(transferTransactionResults);
     }
 
