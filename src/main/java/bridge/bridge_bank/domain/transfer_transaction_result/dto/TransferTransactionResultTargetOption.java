@@ -1,6 +1,6 @@
-package bridge.bridge_bank.domain.transfer_transaction.dto;
+package bridge.bridge_bank.domain.transfer_transaction_result.dto;
 
-import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.repository;
 
-import bridge.bridge_bank.domain.transfer.reserve_transfer_schedule.repeat.QReserveRepeatTransferSchedule;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.QReserveRepeatTransferSchedule;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.ReserveRepeatTransferSchedule;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.ReserveRepeatTransferScheduleTargetOption;
 import com.querydsl.core.types.dsl.BooleanExpression;

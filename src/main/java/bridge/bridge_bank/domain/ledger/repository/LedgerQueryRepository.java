@@ -3,7 +3,7 @@ package bridge.bridge_bank.domain.ledger.repository;
 import bridge.bridge_bank.domain.ledger.entity.LedgerEntryType;
 import bridge.bridge_bank.domain.ledger.entity.QLedgerEntry;
 import bridge.bridge_bank.domain.ledger.entity.QLedgerVoucher;
-import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

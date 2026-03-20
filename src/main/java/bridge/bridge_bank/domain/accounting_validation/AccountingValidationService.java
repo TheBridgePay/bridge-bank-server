@@ -2,8 +2,8 @@ package bridge.bridge_bank.domain.accounting_validation;
 
 import bridge.bridge_bank.domain.ledger.entity.LedgerEntryType;
 import bridge.bridge_bank.domain.ledger.repository.LedgerQueryRepository;
-import bridge.bridge_bank.domain.transfer_transaction.repository.TransferTransactionResultQueryRepository;
-import bridge.bridge_bank.domain.transfer_transaction.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction_result.repository.TransferTransactionResultQueryRepository;
+import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
