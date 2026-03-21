@@ -30,4 +30,22 @@ public class ReserveRepeatTransferSchedule {
     private RepeatType repeatType;
 
     private Integer repeatValue;
+
+    public static ReserveRepeatTransferSchedule create(
+            String senderAccountNumber,
+            String receiverAccountNumber,
+            BigDecimal transferAmount,
+            LocalDateTime transferDateTime,
+            RepeatType repeatType,
+            Integer repeatValue
+    ){
+        return ReserveRepeatTransferSchedule.builder()
+                .senderAccountNumber(senderAccountNumber)
+                .receiverAccountNumber(receiverAccountNumber)
+                .transferAmount(transferAmount)
+                .transferDateTime(transferDateTime)
+                .repeatType(repeatType)
+                .repeatValue(repeatValue)
+                .build();
+    }
 }

@@ -32,7 +32,7 @@ public class TransferService {
         Account senderAccount = accounts[0];
         Account receiverAccount = accounts[1];
 
-        if(!senderAccount.getPassword().equals(transferRequest.getReceiverAccount())) {
+        if(!senderAccount.getPassword().equals(transferRequest.getSenderPassword())) {
             throw new IllegalArgumentException("sender password not match");
         }
 
@@ -152,9 +152,6 @@ public class TransferService {
         Account senderAccount = accounts[0];
         Account receiverAccount = accounts[1];
 
-        if(!senderAccount.getPassword().equals(transferRequest.getReceiverAccount())) {
-            throw new IllegalArgumentException("sender password not match");
-        }
 
         if (senderAccount.getBalance().compareTo(transferRequest.getTransferAmount()) < 0) {
             throw new IllegalArgumentException("sender balance not enough");
