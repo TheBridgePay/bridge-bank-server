@@ -1,1 +1,6 @@
 rootProject.name = 'bridge-bank'
+
+include 'common'
+include 'core-server'
+include 'reserve-once-transfer-worker'
+include 'reserve-repeat-transfer-worker'
