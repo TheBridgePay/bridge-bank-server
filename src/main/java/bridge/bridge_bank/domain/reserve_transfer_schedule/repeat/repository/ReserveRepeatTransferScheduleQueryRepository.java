@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -23,6 +24,12 @@ public class ReserveRepeatTransferScheduleQueryRepository {
         }
 
         return qReserveRepeatTransferSchedule.receiverAccountNumber.eq(receiverAccountNumberCond);
+    }
+
+    public List<ReserveRepeatTransferSchedule> getPendingReserveRepeatTransferSchedules(LocalDateTime now) {
+        return queryFactory.selectFrom(qReserveRepeatTransferSchedule)
+                .where(qReserveRepeatTransferSchedule.transferDateTime.lt(now))
+                .fetch();
     }
 
     public List<ReserveRepeatTransferSchedule> getReserveRepeatTransferSchedules(

@@ -29,7 +29,7 @@ public class ReserveOnceTransferScheduleService {
             throw new IllegalArgumentException("Sender and Receiver account cannot be the same");
         }
 
-        Account[] accounts = accountService.getTwoAccountsForUpdate(
+        Account[] accounts = accountService.getTwoAccounts(
                 reserveOnceTransferScheduleCreateRequest.getSenderAccount(),
                 reserveOnceTransferScheduleCreateRequest.getReceiverAccount());
         Account senderAccount = accounts[0];
@@ -64,10 +64,10 @@ public class ReserveOnceTransferScheduleService {
     }
 
     @Transactional
-    public void deleteReserveOnceTransferSchedule(
-            ReserveOnceTransferSchedule reserveOnceTransferSchedule
+    public void deleteReserveOnceTransferScheduleById(
+            Long reserveOnceTransferScheduleId
     ) {
-        reserveOnceTransferScheduleRepository.delete(reserveOnceTransferSchedule);
+        reserveOnceTransferScheduleRepository.deleteById(reserveOnceTransferScheduleId);
     }
 
     @Transactional

@@ -1,9 +1,7 @@
 package bridge.bridge_bank.domain.account;
 
 import bridge.bridge_bank.domain.account.entity.Account;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.infrastructure.item.xml.StaxEventItemReader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +18,23 @@ public class AccountService {
         accountRepository.save(account);
     }
 
+    public Account[] getTwoAccounts(String senderAccountNumber, String receiverAccountNumber2) {
+        boolean firstIsSmaller = senderAccountNumber.compareTo(receiverAccountNumber2) < 0;
+        String first = firstIsSmaller ? senderAccountNumber : receiverAccountNumber2;
+        String second = firstIsSmaller ? receiverAccountNumber2 : senderAccountNumber;
+
+        Account firstAccount = getAccount(first)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found: " + first));
+        Account secondAccount = getAccount(second)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found: " + second));
+
+        if (firstIsSmaller) {
+            return new Account[]{firstAccount, secondAccount};
+        } else {
+            return new Account[]{secondAccount, firstAccount};
+        }
+    }
+
     public Optional<Account> getAccount(String accountNumber) {
         return accountRepository.getAccountByAccountNumber(accountNumber);
     }
@@ -28,10 +43,10 @@ public class AccountService {
      * 두 계좌를 데드락 방지를 위해 계좌번호 오름차순으로 비관적 잠금(SELECT FOR UPDATE) 후 조회.
      * @return index 0 = accountNumber1에 해당하는 Account, index 1 = accountNumber2에 해당하는 Account
      */
-    public Account[] getTwoAccountsForUpdate(String accountNumber1, String accountNumber2) {
-        boolean firstIsSmaller = accountNumber1.compareTo(accountNumber2) < 0;
-        String first = firstIsSmaller ? accountNumber1 : accountNumber2;
-        String second = firstIsSmaller ? accountNumber2 : accountNumber1;
+    public Account[] getTwoAccountsForUpdate(String senderAccountNumber, String receiverAccountNumber) {
+        boolean firstIsSmaller = senderAccountNumber.compareTo(receiverAccountNumber) < 0;
+        String first = firstIsSmaller ? senderAccountNumber : receiverAccountNumber;
+        String second = firstIsSmaller ? receiverAccountNumber : senderAccountNumber;
 
         Account firstAccount = accountRepository.getAccountByAccountNumberForUpdate(first)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found: " + first));
