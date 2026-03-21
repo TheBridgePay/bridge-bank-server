@@ -25,4 +25,18 @@ public class ReserveOnceTransferSchedule {
     private BigDecimal transferAmount;
 
     private LocalDateTime transferDateTime;
+
+    public static ReserveOnceTransferSchedule create(
+            String senderAccountNumber,
+            String receiverAccountNumber,
+            BigDecimal transferAmount,
+            LocalDateTime transferDateTime
+    ){
+        return ReserveOnceTransferSchedule.builder()
+                .senderAccountNumber(senderAccountNumber)
+                .receiverAccountNumber(receiverAccountNumber)
+                .transferAmount(transferAmount)
+                .transferDateTime(transferDateTime)
+                .build();
+    }
 }

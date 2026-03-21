@@ -20,12 +20,29 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    public boolean checkAccount(String accountNumber) {
-        return getAccount(accountNumber).isPresent();
-    }
-
     public Optional<Account> getAccount(String accountNumber) {
         return accountRepository.getAccountByAccountNumber(accountNumber);
+    }
+
+    /**
+     * 두 계좌를 데드락 방지를 위해 계좌번호 오름차순으로 비관적 잠금(SELECT FOR UPDATE) 후 조회.
+     * @return index 0 = accountNumber1에 해당하는 Account, index 1 = accountNumber2에 해당하는 Account
+     */
+    public Account[] getTwoAccountsForUpdate(String accountNumber1, String accountNumber2) {
+        boolean firstIsSmaller = accountNumber1.compareTo(accountNumber2) < 0;
+        String first = firstIsSmaller ? accountNumber1 : accountNumber2;
+        String second = firstIsSmaller ? accountNumber2 : accountNumber1;
+
+        Account firstAccount = accountRepository.getAccountByAccountNumberForUpdate(first)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found: " + first));
+        Account secondAccount = accountRepository.getAccountByAccountNumberForUpdate(second)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found: " + second));
+
+        if (firstIsSmaller) {
+            return new Account[]{firstAccount, secondAccount};
+        } else {
+            return new Account[]{secondAccount, firstAccount};
+        }
     }
 
     @Transactional
