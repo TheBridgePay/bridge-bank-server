@@ -1,100 +1,60 @@
 plugins {
 	id 'java'
 	id 'idea'
-	id 'org.springframework.boot' version '4.0.3'
-	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.springframework.boot' version '4.0.3' apply false
+	id 'io.spring.dependency-management' version '1.1.7' apply false
 }
 
-group = 'bridge'
-version = '0.0.1-SNAPSHOT'
+allprojects {
+	group = 'bridge'
+	version = '0.0.1-SNAPSHOT'
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+	repositories {
+		mavenCentral()
 	}
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'io.spring.dependency-management'
+
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(21)
+		}
+	}
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
+	ext {
+		set('datasourceMicrometerVersion', '2.2.0')
+		set('querydslVersion', '7.1')
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.boot:spring-boot-dependencies:4.0.3"
+			mavenBom "net.ttddyy.observation:datasource-micrometer-bom:${datasourceMicrometerVersion}"
+		}
+	}
+
+	dependencies {
+		annotationProcessor 'org.projectlombok:lombok'
+		compileOnly 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
+		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	}
+
+	tasks.withType(JavaCompile).configureEach {
+		options.encoding = 'UTF-8'
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
 	}
 }
-
-repositories {
-	mavenCentral()
-}
-
-ext {
-	set('datasourceMicrometerVersion', "2.2.0")
-	set('querydslVersion', "7.1")
-}
-
-dependencies {
-
-	// web
-	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2'
-
-	// observing
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'net.ttddyy.observation:datasource-micrometer-spring-boot'
-	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
-
-	// util
-	annotationProcessor 'org.projectlombok:lombok'
-	compileOnly 'org.projectlombok:lombok'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-batch'
-
-	// data
-	runtimeOnly 'org.postgresql:postgresql'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-	// querydsl
-	implementation "io.github.openfeign.querydsl:querydsl-jpa:${querydslVersion}"
-	annotationProcessor "io.github.openfeign.querydsl:querydsl-apt:${querydslVersion}:jakarta"
-	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-
-	// messaging
-	implementation 'org.springframework.boot:spring-boot-starter-kafka'
-
-	// test
-	testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-batch-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-redis-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-kafka-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-dependencyManagement {
-	imports {
-		mavenBom "net.ttddyy.observation:datasource-micrometer-bom:${datasourceMicrometerVersion}"
-	}
-}
-
-// querydsl generated sources
-def generatedDir = "src/main/generated"
-
-tasks.withType(JavaCompile).configureEach {
-	options.generatedSourceOutputDirectory.set(file(generatedDir))
-}
-
-idea {
-	module {
-		generatedSourceDirs += file(generatedDir)
-	}
-}
-
-clean {
-	delete file(generatedDir)
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
-
