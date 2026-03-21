@@ -24,7 +24,6 @@ public class AccountingValidationService {
     private final TransferTransactionResultQueryRepository transferTransactionResultQueryRepository;
     private final LedgerQueryRepository ledgerQueryRepository;
 
-    @Transactional(readOnly = true)
     public void validateYesterdayAccountingByTransferType(TransferTransactionType transferTransactionType) {
         CompletableFuture<BigDecimal> ledgerDebitSumFuture = CompletableFuture.supplyAsync(
                 () -> getYesterdayLedgerSumByTransferTypeAndLedgerType(transferTransactionType, LedgerEntryType.DEBIT),
@@ -38,7 +37,7 @@ public class AccountingValidationService {
                 () -> getYesterdayTransactionSumByTransferType(transferTransactionType),
                 asyncAccountingValidationExecutor
         );
-        CompletableFuture.allOf(ledgerDebitSumFuture,ledgerDebitSumFuture,transactionSumFuture).join();
+        CompletableFuture.allOf(ledgerDebitSumFuture,ledgerCreditSumFuture,transactionSumFuture).join();
 
         BigDecimal ledgerDebitSum = ledgerDebitSumFuture.join();
         BigDecimal ledgerCreditSum = ledgerCreditSumFuture.join();
@@ -72,12 +71,10 @@ public class AccountingValidationService {
         log.info(transferTransactionType.name() + " 타입 정합성 검증 성공, 거래내역 합: " + transactionSum + "\nDEBIT TYPE 합: " + ledgerDebitSum + "\nCREDIT TYPE 합: " + ledgerCreditSum);
     }
 
-    //@Transactional(readOnly = true)
     private BigDecimal getYesterdayTransactionSumByTransferType(TransferTransactionType transferTransactionType) {
         return transferTransactionResultQueryRepository.getYesterdaySumByTransferType(transferTransactionType);
     }
 
-    //@Transactional(readOnly = true)
     private BigDecimal getYesterdayLedgerSumByTransferTypeAndLedgerType(TransferTransactionType transferTransactionType, LedgerEntryType ledgerEntryType) {
         return ledgerQueryRepository.getYesterdaySumByTransferTypeAndLedgerType(transferTransactionType, ledgerEntryType);
     }

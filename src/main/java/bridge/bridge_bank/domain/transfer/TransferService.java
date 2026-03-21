@@ -27,11 +27,10 @@ public class TransferService {
             throw new IllegalArgumentException("Sender and Receiver account cannot be the same");
         }
 
-        Account senderAccount = accountService.getAccount(transferRequest.getSenderAccount())
-                .orElseThrow(() -> new IllegalArgumentException("Sender account not found"));
-
-        Account receiverAccount = accountService.getAccount(transferRequest.getReceiverAccount())
-                .orElseThrow(() -> new IllegalArgumentException("Receiver account not found"));
+        Account[] accounts = accountService.getTwoAccountsForUpdate(
+                transferRequest.getSenderAccount(), transferRequest.getReceiverAccount());
+        Account senderAccount = accounts[0];
+        Account receiverAccount = accounts[1];
 
         if(!senderAccount.getPassword().equals(transferRequest.getReceiverAccount())) {
             throw new IllegalArgumentException("sender password not match");
@@ -90,15 +89,10 @@ public class TransferService {
             throw new IllegalArgumentException("Sender and Receiver account cannot be the same");
         }
 
-        Account senderAccount = accountService.getAccount(transferRequest.getSenderAccount())
-                .orElseThrow(() -> new IllegalArgumentException("Sender account not found"));
-
-        Account receiverAccount = accountService.getAccount(transferRequest.getReceiverAccount())
-                .orElseThrow(() -> new IllegalArgumentException("Receiver account not found"));
-
-        if(!senderAccount.getPassword().equals(transferRequest.getReceiverAccount())) {
-            throw new IllegalArgumentException("sender password not match");
-        }
+        Account[] accounts = accountService.getTwoAccountsForUpdate(
+                transferRequest.getSenderAccount(), transferRequest.getReceiverAccount());
+        Account senderAccount = accounts[0];
+        Account receiverAccount = accounts[1];
 
         if (senderAccount.getBalance().compareTo(transferRequest.getTransferAmount()) < 0) {
             throw new IllegalArgumentException("sender balance not enough");
@@ -153,11 +147,10 @@ public class TransferService {
             throw new IllegalArgumentException("Sender and Receiver account cannot be the same");
         }
 
-        Account senderAccount = accountService.getAccount(transferRequest.getSenderAccount())
-                .orElseThrow(() -> new IllegalArgumentException("Sender account not found"));
-
-        Account receiverAccount = accountService.getAccount(transferRequest.getReceiverAccount())
-                .orElseThrow(() -> new IllegalArgumentException("Receiver account not found"));
+        Account[] accounts = accountService.getTwoAccountsForUpdate(
+                transferRequest.getSenderAccount(), transferRequest.getReceiverAccount());
+        Account senderAccount = accounts[0];
+        Account receiverAccount = accounts[1];
 
         if(!senderAccount.getPassword().equals(transferRequest.getReceiverAccount())) {
             throw new IllegalArgumentException("sender password not match");
