@@ -2,6 +2,7 @@ package bridge.bridge_bank.domain.transfer_transaction_result;
 
 import bridge.bridge_bank.domain.transfer_transaction_result.dto.TransferTransactionResultTargetOption;
 import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionResult;
+import bridge.bridge_bank.domain.transfer_transaction_result.repository.TransferTransactionResultQueryRepository;
 import bridge.bridge_bank.domain.transfer_transaction_result.repository.TransferTransactionResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransferTransactionResultService {
     private final TransferTransactionResultRepository transactionResultRepository;
+    private final TransferTransactionResultQueryRepository transferTransactionResultQueryRepository;
 
     @Transactional
     public void saveTransferTransactionResultBoth(
@@ -32,6 +34,8 @@ public class TransferTransactionResultService {
             String senderAccountNumber,
             TransferTransactionResultTargetOption transferTransactionResultTargetOption
     ){
-        return null;
+        return transferTransactionResultQueryRepository.get10TransferTransactionResults(
+                senderAccountNumber, transferTransactionResultTargetOption
+        );
     }
 }
