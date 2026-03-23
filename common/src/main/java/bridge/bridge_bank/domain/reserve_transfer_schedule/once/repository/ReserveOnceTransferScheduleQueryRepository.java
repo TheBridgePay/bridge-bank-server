@@ -1,7 +1,7 @@
 package bridge.bridge_bank.domain.reserve_transfer_schedule.once.repository;
 
-import bridge.bridge_bank.domain.reserve_transfer_schedule.once.QReserveOnceTransferSchedule;
-import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferSchedule;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.once.entity.QReserveOnceTransferSchedule;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.once.entity.ReserveOnceTransferSchedule;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.once.dto.ReserveOnceTransferScheduleTargetOption;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

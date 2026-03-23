@@ -1,4 +1,4 @@
-package bridge.bridge_bank.domain.notification.event;
+package bridge.bridge_bank.infra.kafka;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -17,7 +17,7 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.type.mapping: >-
-          accountNotificationEvent:bridge.bridge_bank.domain.notification.event.AccountNotificationEvent
+          accountNotificationEvent:bridge.bridge_bank.infra.kafka.AccountNotificationEvent
       acks: all
       retries: 3
     consumer:

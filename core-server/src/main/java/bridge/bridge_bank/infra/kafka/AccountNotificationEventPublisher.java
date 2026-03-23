@@ -1,4 +1,4 @@
-package bridge.bridge_bank.domain.notification.event;
+package bridge.bridge_bank.infra.kafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,11 +1,11 @@
 package bridge.bridge_bank.domain.reserve_transfer_execution;
 
-import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferSchedule;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.once.entity.ReserveOnceTransferSchedule;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferScheduleService;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.ReserveRepeatTransferScheduleService;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.RepeatType;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.ReserveRepeatTransferSchedule;
-import bridge.bridge_bank.domain.transfer.TransferRequest;
+import bridge.bridge_bank.domain.transfer.dto.TransferRequest;
 import bridge.bridge_bank.domain.transfer.TransferService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

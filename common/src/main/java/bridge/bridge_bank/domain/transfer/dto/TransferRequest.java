@@ -1,4 +1,4 @@
-package bridge.bridge_bank.domain.transfer;
+package bridge.bridge_bank.domain.transfer.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
