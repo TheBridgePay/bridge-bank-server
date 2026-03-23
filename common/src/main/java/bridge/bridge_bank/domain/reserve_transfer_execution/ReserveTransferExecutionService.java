@@ -6,10 +6,14 @@ import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.ReserveRepeatT
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.ReserveRepeatTransferSchedule;
 import bridge.bridge_bank.domain.transfer.TransferRequest;
 import bridge.bridge_bank.domain.transfer.TransferService;
+import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionType;
+import bridge.bridge_bank.domain.transfer_transaction_result.event.ReserveTransferResultEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +24,11 @@ public class ReserveTransferExecutionService {
     private final ReserveRepeatTransferScheduleService reserveRepeatTransferScheduleService;
     private final TransactionTemplate transactionTemplate;
 
-    public void executeReserveOnceTransfer(ReserveOnceTransferSchedule reserveOnceTransferSchedule) {
+    public ReserveTransferResultEvent executeReserveOnceTransfer(ReserveOnceTransferSchedule reserveOnceTransferSchedule) {
+        ReserveTransferResultEvent event;
         try {
-            transactionTemplate.execute(status -> {
-                transferService.reserveOnceTransferNow(
+            String groupId = transactionTemplate.execute(status -> {
+                return transferService.reserveOnceTransferNow(
                         TransferRequest.create(
                                 reserveOnceTransferSchedule.getSenderAccountNumber(),
                                 "",
@@ -31,11 +36,27 @@ public class ReserveTransferExecutionService {
                                 reserveOnceTransferSchedule.getTransferAmount()
                         )
                 );
-                return null;
             });
+
+            event = ReserveTransferResultEvent.success(
+                    groupId,
+                    TransferTransactionType.RESERVE_ONCE_OUT.name(),
+                    reserveOnceTransferSchedule.getTransferAmount(),
+                    reserveOnceTransferSchedule.getSenderAccountNumber(),
+                    reserveOnceTransferSchedule.getReceiverAccountNumber(),
+                    LocalDateTime.now()
+            );
         } catch (Exception e) {
             log.error("reserve once transfer failed - schedule id -{}",
                     reserveOnceTransferSchedule.getId(), e);
+
+            event = ReserveTransferResultEvent.fail(
+                    TransferTransactionType.RESERVE_ONCE_OUT.name(),
+                    reserveOnceTransferSchedule.getTransferAmount(),
+                    reserveOnceTransferSchedule.getSenderAccountNumber(),
+                    reserveOnceTransferSchedule.getReceiverAccountNumber(),
+                    e.getMessage()
+            );
         } finally {
             transactionTemplate.execute(status -> {
                 reserveOnceTransferScheduleService.deleteReserveOnceTransferScheduleById(
@@ -44,12 +65,14 @@ public class ReserveTransferExecutionService {
                 return null;
             });
         }
+        return event;
     }
 
-    public void executeReserveRepeatTransfer(ReserveRepeatTransferSchedule reserveRepeatTransferSchedule) {
+    public ReserveTransferResultEvent executeReserveRepeatTransfer(ReserveRepeatTransferSchedule reserveRepeatTransferSchedule) {
+        ReserveTransferResultEvent event;
         try {
-            transactionTemplate.execute(status -> {
-                transferService.reserveRepeatTransferNow(
+            String groupId = transactionTemplate.execute(status -> {
+                return transferService.reserveRepeatTransferNow(
                         TransferRequest.create(
                                 reserveRepeatTransferSchedule.getSenderAccountNumber(),
                                 "",
@@ -57,11 +80,27 @@ public class ReserveTransferExecutionService {
                                 reserveRepeatTransferSchedule.getTransferAmount()
                         )
                 );
-                return null;
             });
+
+            event = ReserveTransferResultEvent.success(
+                    groupId,
+                    TransferTransactionType.RESERVE_REPEAT_OUT.name(),
+                    reserveRepeatTransferSchedule.getTransferAmount(),
+                    reserveRepeatTransferSchedule.getSenderAccountNumber(),
+                    reserveRepeatTransferSchedule.getReceiverAccountNumber(),
+                    LocalDateTime.now()
+            );
         } catch (Exception e) {
             log.error("reserve repeat transfer failed - schedule id -{}",
                     reserveRepeatTransferSchedule.getId(), e);
+
+            event = ReserveTransferResultEvent.fail(
+                    TransferTransactionType.RESERVE_REPEAT_OUT.name(),
+                    reserveRepeatTransferSchedule.getTransferAmount(),
+                    reserveRepeatTransferSchedule.getSenderAccountNumber(),
+                    reserveRepeatTransferSchedule.getReceiverAccountNumber(),
+                    e.getMessage()
+            );
         } finally {
             transactionTemplate.execute(status -> {
                 reserveRepeatTransferScheduleService.renewReserveRepeatTransferSchedule(
@@ -70,5 +109,6 @@ public class ReserveTransferExecutionService {
                 return null;
             });
         }
+        return event;
     }
 }

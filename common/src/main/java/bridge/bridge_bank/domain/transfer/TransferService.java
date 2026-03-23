@@ -84,7 +84,7 @@ public class TransferService {
     }
 
     @Transactional
-    public void reserveOnceTransferNow(TransferRequest transferRequest) {
+    public String reserveOnceTransferNow(TransferRequest transferRequest) {
         if(transferRequest.getSenderAccount().equals(transferRequest.getReceiverAccount())) {
             throw new IllegalArgumentException("Sender and Receiver account cannot be the same");
         }
@@ -139,10 +139,12 @@ public class TransferService {
                 TransferTransactionType.RESERVE_ONCE_OUT,
                 TransferTransactionType.RESERVE_ONCE_IN
         );
+
+        return transferTransactionGroupId;
     }
 
     @Transactional
-    public void reserveRepeatTransferNow(TransferRequest transferRequest) {
+    public String reserveRepeatTransferNow(TransferRequest transferRequest) {
         if(transferRequest.getSenderAccount().equals(transferRequest.getReceiverAccount())) {
             throw new IllegalArgumentException("Sender and Receiver account cannot be the same");
         }
@@ -198,5 +200,7 @@ public class TransferService {
                 TransferTransactionType.RESERVE_REPEAT_OUT,
                 TransferTransactionType.RESERVE_REPEAT_IN
         );
+
+        return transferTransactionGroupId;
     }
 }
