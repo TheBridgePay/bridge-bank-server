@@ -2,6 +2,7 @@ package bridge.bridge_bank.domain.reserve_transfer_execution;
 
 import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferSchedule;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferScheduleService;
+import bridge.bridge_bank.domain.transfer_transaction_result.event.ReserveTransferResultEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +23,7 @@ import java.util.concurrent.Executor;
 public class ReserveOnceTransferScheduler {
     private final ReserveOnceTransferScheduleService reserveOnceTransferScheduleService;
     private final ReserveTransferExecutionService reserveTransferExecutionService;
+    private final ReserveTransferResultEventPublisher reserveTransferResultEventPublisher;
 
     @Qualifier("asyncReserveTransferOnceExecutor")
     private final Executor asyncReserveTransferOnceExecutor;
@@ -50,7 +52,9 @@ public class ReserveOnceTransferScheduler {
                 .map(partition -> CompletableFuture.runAsync(() -> {
                     for (ReserveOnceTransferSchedule schedule : partition) {
                         try {
-                            reserveTransferExecutionService.executeReserveOnceTransfer(schedule);
+                            ReserveTransferResultEvent event =
+                                    reserveTransferExecutionService.executeReserveOnceTransfer(schedule);
+                            reserveTransferResultEventPublisher.publish(event);
                         } catch (Exception e) {
                             log.error("예약 이체 실행 실패, 다음 분에 재시도 - scheduleId: {}",
                                     schedule.getId(), e);

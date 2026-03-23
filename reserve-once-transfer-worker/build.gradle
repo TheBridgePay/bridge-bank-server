@@ -5,6 +5,9 @@ plugins {
 dependencies {
 	implementation project(':common')
 
+	// messaging
+	implementation 'org.springframework.boot:spring-boot-starter-kafka'
+
 	// observing
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
