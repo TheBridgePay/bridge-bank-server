@@ -1,10 +1,10 @@
 package bridge.bridge_bank.domain.reserve_transfer_execution;
 
-import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferSchedule;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.once.entity.ReserveOnceTransferSchedule;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferScheduleService;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.ReserveRepeatTransferScheduleService;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.ReserveRepeatTransferSchedule;
-import bridge.bridge_bank.domain.transfer.TransferRequest;
+import bridge.bridge_bank.domain.transfer.dto.TransferRequest;
 import bridge.bridge_bank.domain.transfer.TransferService;
 import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionType;
 import bridge.bridge_bank.domain.transfer_transaction_result.event.ReserveTransferResultEvent;

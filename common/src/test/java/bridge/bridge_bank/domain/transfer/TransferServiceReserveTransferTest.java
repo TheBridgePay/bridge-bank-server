@@ -1,6 +1,7 @@
 package bridge.bridge_bank.domain.transfer;
 
 import bridge.bridge_bank.domain.account.AccountService;
+import bridge.bridge_bank.domain.transfer.dto.TransferRequest;
 import bridge.bridge_bank.domain.account.entity.Account;
 import bridge.bridge_bank.domain.ledger.LedgerService;
 import bridge.bridge_bank.domain.transfer_transaction_result.TransferTransactionResultService;

@@ -1,6 +1,6 @@
 package bridge.bridge_bank.domain.reserve_transfer_execution;
 
-import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferSchedule;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.once.entity.ReserveOnceTransferSchedule;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferScheduleService;
 import bridge.bridge_bank.domain.transfer_transaction_result.event.ReserveTransferResultEvent;
 import lombok.RequiredArgsConstructor;

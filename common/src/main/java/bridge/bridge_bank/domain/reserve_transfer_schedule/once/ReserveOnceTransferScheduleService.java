@@ -2,6 +2,7 @@ package bridge.bridge_bank.domain.reserve_transfer_schedule.once;
 
 import bridge.bridge_bank.domain.account.AccountService;
 import bridge.bridge_bank.domain.account.entity.Account;
+import bridge.bridge_bank.domain.reserve_transfer_schedule.once.entity.ReserveOnceTransferSchedule;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.once.dto.ReserveOnceTransferScheduleCreateRequest;
 import bridge.bridge_bank.global.error.PasswordMismatchException;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.once.dto.ReserveOnceTransferScheduleTargetOption;

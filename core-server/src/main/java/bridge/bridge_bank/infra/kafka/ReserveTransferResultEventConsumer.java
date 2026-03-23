@@ -1,4 +1,4 @@
-package bridge.bridge_bank.domain.transfer_transaction_result;
+package bridge.bridge_bank.infra.kafka;
 
 import bridge.bridge_bank.domain.notification.TransferNotificationService;
 import bridge.bridge_bank.domain.transfer_transaction_result.event.ReserveTransferResultEvent;

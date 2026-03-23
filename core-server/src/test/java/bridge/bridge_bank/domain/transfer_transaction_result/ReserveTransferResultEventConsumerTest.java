@@ -1,6 +1,7 @@
 package bridge.bridge_bank.domain.transfer_transaction_result;
 
 import bridge.bridge_bank.domain.notification.TransferNotificationService;
+import bridge.bridge_bank.infra.kafka.ReserveTransferResultEventConsumer;
 import bridge.bridge_bank.domain.transfer_transaction_result.event.ReserveTransferResultEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
