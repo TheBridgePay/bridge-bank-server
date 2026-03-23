@@ -8,6 +8,7 @@ import bridge.bridge_bank.domain.reserve_transfer_schedule.once.dto.ReserveOnceT
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.ReserveRepeatTransferScheduleService;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.dto.ReserveRepeatTransferScheduleCreateRequest;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.dto.ReserveRepeatTransferScheduleTargetOption;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class ReserveTransferScheduleController {
 
     @PostMapping("/reserve-transfers/once")
     public ResponseEntity<Void> createOnceSchedule(
-            @RequestBody ReserveOnceTransferScheduleCreateRequest request) {
+            @Valid @RequestBody ReserveOnceTransferScheduleCreateRequest request) {
         reserveOnceTransferScheduleService.createReserveOnceTransferSchedule(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -59,7 +60,7 @@ public class ReserveTransferScheduleController {
 
     @PostMapping("/reserve-transfers/repeat")
     public ResponseEntity<Void> createRepeatSchedule(
-            @RequestBody ReserveRepeatTransferScheduleCreateRequest request) {
+            @Valid @RequestBody ReserveRepeatTransferScheduleCreateRequest request) {
         reserveRepeatTransferScheduleService.createReserveRepeatTransferSchedule(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

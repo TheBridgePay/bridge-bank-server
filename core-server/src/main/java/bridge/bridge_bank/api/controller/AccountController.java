@@ -5,6 +5,7 @@ import bridge.bridge_bank.api.dto.AccountResponse;
 import bridge.bridge_bank.domain.account.AccountService;
 import bridge.bridge_bank.domain.account.entity.Account;
 import bridge.bridge_bank.global.error.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<AccountResponse> createAccount(@RequestBody AccountCreateRequest request) {
+    public ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody AccountCreateRequest request) {
         Account account = Account.create(request.getMemberName(), request.getPassword());
         accountService.createAccount(account);
         return ResponseEntity.status(HttpStatus.CREATED).body(AccountResponse.from(account));
