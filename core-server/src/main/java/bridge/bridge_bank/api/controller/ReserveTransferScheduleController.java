@@ -1,5 +1,6 @@
 package bridge.bridge_bank.api.controller;
 
+import bridge.bridge_bank.api.controller.docs.ReserveTransferScheduleControllerDocs;
 import bridge.bridge_bank.api.dto.ReserveOnceScheduleResponse;
 import bridge.bridge_bank.api.dto.ReserveRepeatScheduleResponse;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.once.ReserveOnceTransferScheduleService;
@@ -19,14 +20,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class ReserveTransferScheduleController {
+public class ReserveTransferScheduleController implements ReserveTransferScheduleControllerDocs {
 
     private final ReserveOnceTransferScheduleService reserveOnceTransferScheduleService;
     private final ReserveRepeatTransferScheduleService reserveRepeatTransferScheduleService;
 
-    // ===== Once =====
-
     @PostMapping("/reserve-transfers/once")
+    @Override
     public ResponseEntity<Void> createOnceSchedule(
             @Valid @RequestBody ReserveOnceTransferScheduleCreateRequest request) {
         reserveOnceTransferScheduleService.createReserveOnceTransferSchedule(request);
@@ -34,6 +34,7 @@ public class ReserveTransferScheduleController {
     }
 
     @GetMapping("/accounts/{accountNumber}/reserve-transfers/once")
+    @Override
     public ResponseEntity<List<ReserveOnceScheduleResponse>> getOnceSchedules(
             @PathVariable String accountNumber,
             @RequestParam(required = false) String receiverAccountNumber) {
@@ -51,14 +52,14 @@ public class ReserveTransferScheduleController {
     }
 
     @DeleteMapping("/reserve-transfers/once/{id}")
+    @Override
     public ResponseEntity<Void> deleteOnceSchedule(@PathVariable Long id) {
         reserveOnceTransferScheduleService.deleteReserveOnceTransferScheduleById(id);
         return ResponseEntity.noContent().build();
     }
 
-    // ===== Repeat =====
-
     @PostMapping("/reserve-transfers/repeat")
+    @Override
     public ResponseEntity<Void> createRepeatSchedule(
             @Valid @RequestBody ReserveRepeatTransferScheduleCreateRequest request) {
         reserveRepeatTransferScheduleService.createReserveRepeatTransferSchedule(request);
@@ -66,6 +67,7 @@ public class ReserveTransferScheduleController {
     }
 
     @GetMapping("/accounts/{accountNumber}/reserve-transfers/repeat")
+    @Override
     public ResponseEntity<List<ReserveRepeatScheduleResponse>> getRepeatSchedules(
             @PathVariable String accountNumber,
             @RequestParam(required = false) String receiverAccountNumber) {
@@ -83,6 +85,7 @@ public class ReserveTransferScheduleController {
     }
 
     @DeleteMapping("/reserve-transfers/repeat/{id}")
+    @Override
     public ResponseEntity<Void> deleteRepeatSchedule(@PathVariable Long id) {
         reserveRepeatTransferScheduleService.deleteReserveRepeatTransferScheduleById(id);
         return ResponseEntity.noContent().build();

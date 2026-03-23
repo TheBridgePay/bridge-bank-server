@@ -1,5 +1,6 @@
 package bridge.bridge_bank.api.controller;
 
+import bridge.bridge_bank.api.controller.docs.NotificationControllerDocs;
 import bridge.bridge_bank.api.dto.TransferNotificationResponse;
 import bridge.bridge_bank.domain.notification.TransferNotificationService;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-public class NotificationController {
+public class NotificationController implements NotificationControllerDocs {
 
     private final TransferNotificationService transferNotificationService;
 
     @GetMapping("/api/accounts/{accountNumber}/notifications")
+    @Override
     public ResponseEntity<Page<TransferNotificationResponse>> getNotifications(
             @PathVariable String accountNumber, Pageable pageable) {
         Page<TransferNotificationResponse> response =
@@ -24,6 +26,7 @@ public class NotificationController {
     }
 
     @GetMapping("/api/accounts/{accountNumber}/notifications/unread")
+    @Override
     public ResponseEntity<Page<TransferNotificationResponse>> getUnreadNotifications(
             @PathVariable String accountNumber, Pageable pageable) {
         Page<TransferNotificationResponse> response =
@@ -33,12 +36,14 @@ public class NotificationController {
     }
 
     @GetMapping("/api/accounts/{accountNumber}/notifications/unread/count")
+    @Override
     public ResponseEntity<Long> getUnreadCount(@PathVariable String accountNumber) {
         long count = transferNotificationService.getUnreadCount(accountNumber);
         return ResponseEntity.ok(count);
     }
 
     @PatchMapping("/api/accounts/{accountNumber}/notifications/{id}/read")
+    @Override
     public ResponseEntity<Void> markAsRead(
             @PathVariable String accountNumber, @PathVariable Long id) {
         transferNotificationService.markAsRead(id, accountNumber);
@@ -46,6 +51,7 @@ public class NotificationController {
     }
 
     @PatchMapping("/api/accounts/{accountNumber}/notifications/read-all")
+    @Override
     public ResponseEntity<Integer> markAllAsRead(@PathVariable String accountNumber) {
         int count = transferNotificationService.markAllAsRead(accountNumber);
         return ResponseEntity.ok(count);
