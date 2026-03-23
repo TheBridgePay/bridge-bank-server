@@ -3,6 +3,7 @@ package bridge.bridge_bank.domain.reserve_transfer_schedule.repeat;
 import bridge.bridge_bank.domain.account.AccountService;
 import bridge.bridge_bank.domain.account.entity.Account;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.dto.ReserveRepeatTransferScheduleCreateRequest;
+import bridge.bridge_bank.global.error.PasswordMismatchException;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.dto.ReserveRepeatTransferScheduleTargetOption;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.RepeatType;
 import bridge.bridge_bank.domain.reserve_transfer_schedule.repeat.entity.ReserveRepeatTransferSchedule;
@@ -37,7 +38,7 @@ public class ReserveRepeatTransferScheduleService {
         Account senderAccount = accounts[0];
 
         if(!senderAccount.getPassword().equals(reserveRepeatTransferScheduleCreateRequest.getSenderPassword())){
-            throw new IllegalArgumentException("Sender account password does not match sender account password");
+            throw new PasswordMismatchException("Sender account password does not match");
         }
 
         ReserveRepeatTransferSchedule reserveRepeatTransferSchedule = ReserveRepeatTransferSchedule.create(

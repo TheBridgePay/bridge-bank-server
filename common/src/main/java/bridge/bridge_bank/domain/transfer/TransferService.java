@@ -7,6 +7,8 @@ import bridge.bridge_bank.domain.transfer_transaction_result.TransferTransaction
 import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionResult;
 import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionResultStatus;
 import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionType;
+import bridge.bridge_bank.global.error.InsufficientBalanceException;
+import bridge.bridge_bank.global.error.PasswordMismatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,11 +35,11 @@ public class TransferService {
         Account receiverAccount = accounts[1];
 
         if(!senderAccount.getPassword().equals(transferRequest.getSenderPassword())) {
-            throw new IllegalArgumentException("sender password not match");
+            throw new PasswordMismatchException("sender password not match");
         }
 
         if (senderAccount.getBalance().compareTo(transferRequest.getTransferAmount()) < 0) {
-            throw new IllegalArgumentException("sender balance not enough");
+            throw new InsufficientBalanceException("sender balance not enough");
         }
 
         BigDecimal newSenderAccountBalance = senderAccount.getBalance().subtract(transferRequest.getTransferAmount());
@@ -95,7 +97,7 @@ public class TransferService {
         Account receiverAccount = accounts[1];
 
         if (senderAccount.getBalance().compareTo(transferRequest.getTransferAmount()) < 0) {
-            throw new IllegalArgumentException("sender balance not enough");
+            throw new InsufficientBalanceException("sender balance not enough");
         }
 
         BigDecimal newSenderAccountBalance = senderAccount.getBalance().subtract(transferRequest.getTransferAmount());
@@ -156,7 +158,7 @@ public class TransferService {
 
 
         if (senderAccount.getBalance().compareTo(transferRequest.getTransferAmount()) < 0) {
-            throw new IllegalArgumentException("sender balance not enough");
+            throw new InsufficientBalanceException("sender balance not enough");
         }
 
         BigDecimal newSenderAccountBalance = senderAccount.getBalance().subtract(transferRequest.getTransferAmount());

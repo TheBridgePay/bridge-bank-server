@@ -1,6 +1,7 @@
 package bridge.bridge_bank.domain.account;
 
 import bridge.bridge_bank.domain.account.entity.Account;
+import bridge.bridge_bank.global.error.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +25,9 @@ public class AccountService {
         String second = firstIsSmaller ? receiverAccountNumber2 : senderAccountNumber;
 
         Account firstAccount = getAccount(first)
-                .orElseThrow(() -> new IllegalArgumentException("Account not found: " + first));
+                .orElseThrow(() -> new EntityNotFoundException("Account not found: " + first));
         Account secondAccount = getAccount(second)
-                .orElseThrow(() -> new IllegalArgumentException("Account not found: " + second));
+                .orElseThrow(() -> new EntityNotFoundException("Account not found: " + second));
 
         if (firstIsSmaller) {
             return new Account[]{firstAccount, secondAccount};
@@ -49,9 +50,9 @@ public class AccountService {
         String second = firstIsSmaller ? receiverAccountNumber : senderAccountNumber;
 
         Account firstAccount = accountRepository.getAccountByAccountNumberForUpdate(first)
-                .orElseThrow(() -> new IllegalArgumentException("Account not found: " + first));
+                .orElseThrow(() -> new EntityNotFoundException("Account not found: " + first));
         Account secondAccount = accountRepository.getAccountByAccountNumberForUpdate(second)
-                .orElseThrow(() -> new IllegalArgumentException("Account not found: " + second));
+                .orElseThrow(() -> new EntityNotFoundException("Account not found: " + second));
 
         if (firstIsSmaller) {
             return new Account[]{firstAccount, secondAccount};
