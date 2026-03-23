@@ -51,14 +51,9 @@ public class ReserveOnceTransferScheduler {
         List<CompletableFuture<Void>> futures = partitions.values().stream()
                 .map(partition -> CompletableFuture.runAsync(() -> {
                     for (ReserveOnceTransferSchedule schedule : partition) {
-                        try {
-                            ReserveTransferResultEvent event =
-                                    reserveTransferExecutionService.executeReserveOnceTransfer(schedule);
-                            reserveTransferResultEventPublisher.publish(event);
-                        } catch (Exception e) {
-                            log.error("예약 이체 실행 실패, 다음 분에 재시도 - scheduleId: {}",
-                                    schedule.getId(), e);
-                        }
+                        ReserveTransferResultEvent event =
+                                reserveTransferExecutionService.executeReserveOnceTransfer(schedule);
+                        reserveTransferResultEventPublisher.publish(event);
                     }
                 }, asyncReserveTransferOnceExecutor))
                 .toList();
