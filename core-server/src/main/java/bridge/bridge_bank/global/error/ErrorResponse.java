@@ -11,9 +11,10 @@ import java.time.LocalDateTime;
 public class ErrorResponse {
     private String code;
     private String message;
+    private String path;
     private LocalDateTime timestamp;
 
-    public static ErrorResponse of(String code, String message) {
-        return new ErrorResponse(code, message, LocalDateTime.now());
+    public static ErrorResponse of(String code, String message, String path) {
+        return new ErrorResponse(code, message, path, LocalDateTime.now());
     }
 }

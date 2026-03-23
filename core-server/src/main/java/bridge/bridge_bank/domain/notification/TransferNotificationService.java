@@ -2,6 +2,8 @@ package bridge.bridge_bank.domain.notification;
 
 import bridge.bridge_bank.domain.notification.entity.TransferNotification;
 import bridge.bridge_bank.domain.notification.entity.TransferNotificationStatus;
+import bridge.bridge_bank.global.error.AccessDeniedException;
+import bridge.bridge_bank.global.error.EntityNotFoundException;
 import bridge.bridge_bank.domain.notification.event.AccountNotificationEvent;
 import bridge.bridge_bank.domain.notification.event.AccountNotificationEventPublisher;
 import bridge.bridge_bank.domain.notification.repository.TransferNotificationRepository;
@@ -81,11 +83,11 @@ public class TransferNotificationService {
     @Transactional
     public void markAsRead(Long notificationId, String accountNumber) {
         TransferNotification notification = transferNotificationRepository.findById(notificationId)
-                .orElseThrow(() -> new IllegalArgumentException(
+                .orElseThrow(() -> new EntityNotFoundException(
                         "Notification not found: " + notificationId));
 
         if (!notification.getAccountNumber().equals(accountNumber)) {
-            throw new IllegalArgumentException(
+            throw new AccessDeniedException(
                     "Notification does not belong to account: " + accountNumber);
         }
 
