@@ -21,12 +21,12 @@ public class ReserveTransferResultEventPublisher {
                     if (ex != null) {
                         log.error("Kafka 이벤트 발행 실패 - sender: {}, status: {}",
                                 event.senderAccountNumber(), event.resultStatus(), ex);
-                    } else {
+                    } /*else {
                         log.info("Kafka 이벤트 발행 성공 - groupId: {}, sender: {}, status: {}",
                                 event.transferTransactionGroupId(),
                                 event.senderAccountNumber(),
                                 event.resultStatus());
-                    }
+                    }*/
                 });
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bridge.bridge_bank.domain.transfer_transaction_result.repository.TransferTransactionResultBulkInsertMapper">
+
+    <insert id="bulkInsert">
+        INSERT INTO transfer_transaction_result
+            (transfer_transaction_date, transfer_transaction_group_id, transfer_transaction_result_status,
+             transfer_transaction_type, transfer_amount, before_balance, after_balance,
+             self_account_number, other_account_number)
+        VALUES
+        <foreach collection="results" item="r" separator=",">
+            (#{r.transferTransactionDate}, #{r.transferTransactionGroupId},
+             #{r.transferTransactionResultStatus, typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+             #{r.transferTransactionType, typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+             #{r.transferAmount}, #{r.beforeBalance}, #{r.afterBalance},
+             #{r.selfAccountNumber}, #{r.otherAccountNumber})
+        </foreach>
+    </insert>
+
+</mapper>

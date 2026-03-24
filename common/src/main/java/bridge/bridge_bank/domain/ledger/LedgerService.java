@@ -4,8 +4,7 @@ import bridge.bridge_bank.domain.ledger.entity.LedgerBankAssetType;
 import bridge.bridge_bank.domain.ledger.entity.LedgerEntry;
 import bridge.bridge_bank.domain.ledger.entity.LedgerEntryType;
 import bridge.bridge_bank.domain.ledger.entity.LedgerVoucher;
-import bridge.bridge_bank.domain.ledger.repository.LedgerEntryRepository;
-import bridge.bridge_bank.domain.ledger.repository.LedgerVoucherRepository;
+import bridge.bridge_bank.domain.ledger.repository.LedgerBulkInsertMapper;
 import bridge.bridge_bank.domain.transfer_transaction_result.entity.TransferTransactionType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class LedgerService {
-    private final LedgerVoucherRepository ledgerVoucherRepository;
-    private final LedgerEntryRepository ledgerEntryRepository;
+    private final LedgerBulkInsertMapper ledgerBulkInsertMapper;
 
     @Transactional
     public void recordForTransfer(
@@ -28,8 +26,11 @@ public class LedgerService {
             TransferTransactionType senderTransferTransactionType,
             TransferTransactionType receiverTransferTransactionType
     ){
-        LedgerVoucher ledgerVoucher1 =createAndSaveLedgerVoucher(transferTransactionGroupId, senderTransferTransactionType);
-        LedgerVoucher ledgerVoucher2 =createAndSaveLedgerVoucher(transferTransactionGroupId, receiverTransferTransactionType);
+        List<LedgerVoucher> pairLedgerVoucher =
+                createAndSavePairLedgerVoucher(transferTransactionGroupId, senderTransferTransactionType, receiverTransferTransactionType);
+        LedgerVoucher ledgerVoucher1 =pairLedgerVoucher.get(0);
+        LedgerVoucher ledgerVoucher2 =pairLedgerVoucher.get(1);
+
         List<LedgerEntry> ledgerEntries = new ArrayList<>();
 
         LedgerEntry ledgerEntryDebitForLedgerVoucher1 = LedgerEntry.create(
@@ -69,17 +70,26 @@ public class LedgerService {
         ledgerEntries.add(ledgerEntryDebitForLedgerVoucher2);
         ledgerEntries.add(ledgerEntryCreditForLedgerVoucher2);
 
-        ledgerEntryRepository.saveAll(ledgerEntries);
+        ledgerBulkInsertMapper.bulkInsertEntries(ledgerEntries);
     }
 
-    private LedgerVoucher createAndSaveLedgerVoucher(
+    private List<LedgerVoucher> createAndSavePairLedgerVoucher(
             String transferTransactionGroupId,
-            TransferTransactionType transferTransactionType
+            TransferTransactionType transferTransactionType1,
+            TransferTransactionType transferTransactionType2
     ){
-        LedgerVoucher ledgerVoucher =LedgerVoucher.create(
-                transferTransactionGroupId, transferTransactionType
+        List<LedgerVoucher> ledgerVouchers = new ArrayList<>();
+        LedgerVoucher ledgerVoucher1 =LedgerVoucher.create(
+                transferTransactionGroupId, transferTransactionType1
         );
-        return ledgerVoucherRepository.save(ledgerVoucher);
+        LedgerVoucher ledgerVoucher2 =LedgerVoucher.create(
+                transferTransactionGroupId, transferTransactionType2
+        );
+        ledgerVouchers.add(ledgerVoucher1);
+        ledgerVouchers.add(ledgerVoucher2);
+
+        ledgerBulkInsertMapper.bulkInsertVouchers(ledgerVouchers);
+        return ledgerVouchers;
     }
 
 }

@@ -19,11 +19,11 @@ public class AccountNotificationEventPublisher {
                     if (ex != null) {
                         log.error("알림 이벤트 발행 실패 - account: {}, type: {}",
                                 event.accountNumber(), event.notificationType(), ex);
-                    } else {
+                    } /*else {
                         log.info("알림 이벤트 발행 성공 - account: {}, type: {}, notificationId: {}",
                                 event.accountNumber(), event.notificationType(),
                                 event.notificationId());
-                    }
+                    }*/
                 });
     }
 }

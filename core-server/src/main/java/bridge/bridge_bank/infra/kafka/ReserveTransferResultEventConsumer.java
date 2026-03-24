@@ -19,11 +19,11 @@ public class ReserveTransferResultEventConsumer {
             groupId = "bridge-bank-core-server"
     )
     public void consume(ReserveTransferResultEvent event) {
-        log.info("예약 이체 결과 이벤트 수신 - groupId: {}, status: {}, sender: {}, receiver: {}",
+        /*log.info("예약 이체 결과 이벤트 수신 - groupId: {}, status: {}, sender: {}, receiver: {}",
                 event.transferTransactionGroupId(),
                 event.resultStatus(),
                 event.senderAccountNumber(),
-                event.receiverAccountNumber());
+                event.receiverAccountNumber());*/
 
         transferNotificationService.createNotificationsFromTransferResult(event);
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bridge.bridge_bank.domain.ledger.repository.LedgerBulkInsertMapper">
+
+    <insert id="bulkInsertVouchers" useGeneratedKeys="true" keyProperty="id" keyColumn="ledger_voucher_id">
+        INSERT INTO ledger_voucher (ledger_voucher_date, transfer_transaction_group_id, transfer_transaction_type)
+        VALUES
+        <foreach collection="vouchers" item="v" separator=",">
+            (#{v.ledgerVoucherDate}, #{v.transferTransactionGroupId}, #{v.transferTransactionType, typeHandler=org.apache.ibatis.type.EnumTypeHandler})
+        </foreach>
+    </insert>
+
+    <insert id="bulkInsertEntries">
+        INSERT INTO ledger_entry (amount, ledger_entry_type, ledger_bank_asset_type, ledger_voucher_id)
+        VALUES
+        <foreach collection="entries" item="e" separator=",">
+            (#{e.amount}, #{e.ledgerEntryType, typeHandler=org.apache.ibatis.type.EnumTypeHandler}, #{e.ledgerBankAssetType, typeHandler=org.apache.ibatis.type.EnumTypeHandler}, #{e.ledgerVoucherId})
+        </foreach>
+    </insert>
+
+</mapper>

@@ -28,6 +28,9 @@ dependencies {
 	// db
 	runtimeOnly 'org.postgresql:postgresql'
 
+	// mybatis
+	api 'org.mybatis.spring.boot:mybatis-spring-boot-starter:4.0.1'
+
 	// querydsl
 	api "io.github.openfeign.querydsl:querydsl-jpa:${querydslVersion}"
 	annotationProcessor "io.github.openfeign.querydsl:querydsl-apt:${querydslVersion}:jakarta"
