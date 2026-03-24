@@ -85,6 +85,7 @@ public class ReserveRepeatTransferScheduleService {
                 case WEEKLY  -> newDateTime.plusWeeks(repeatValue);
                 case DAILY   -> newDateTime.plusDays(repeatValue);
                 case HOURLY  -> newDateTime.plusHours(repeatValue);
+                case MINUTELY -> newDateTime.plusMinutes(repeatValue);
             };
         }
 

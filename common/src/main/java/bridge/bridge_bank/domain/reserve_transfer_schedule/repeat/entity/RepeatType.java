@@ -5,4 +5,5 @@ public enum RepeatType {
     WEEKLY,
     DAILY,
     HOURLY,
+    MINUTELY,
 }
