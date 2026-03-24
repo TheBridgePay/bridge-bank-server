@@ -13,7 +13,7 @@ public class AccountingValidationScheduler {
 
     private final AccountingValidationService accountingValidationService;
 
-    @Scheduled(cron = "0 0 4  * * *")
+    @Scheduled(cron = "0 0 4 * * *", zone = "Asia/Seoul")
     public void runAccountingValidationJob() {
         accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.SIMPLE_TRANSFER_IN);
         accountingValidationService.validateYesterdayAccountingByTransferType(TransferTransactionType.RESERVE_ONCE_IN);

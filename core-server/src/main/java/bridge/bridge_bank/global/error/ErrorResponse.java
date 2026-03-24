@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -15,6 +16,6 @@ public class ErrorResponse {
     private LocalDateTime timestamp;
 
     public static ErrorResponse of(String code, String message, String path) {
-        return new ErrorResponse(code, message, path, LocalDateTime.now());
+        return new ErrorResponse(code, message, path, LocalDateTime.now(ZoneId.of("Asia/Seoul")));
     }
 }

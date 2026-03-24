@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -76,7 +77,7 @@ public class ReserveRepeatTransferScheduleService {
         Integer repeatValue = reserveRepeatTransferSchedule.getRepeatValue();
         LocalDateTime oldDateTime = reserveRepeatTransferSchedule.getTransferDateTime();
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         LocalDateTime newDateTime = oldDateTime;
         while (newDateTime.isBefore(now)) {
             newDateTime = switch (repeatType) {

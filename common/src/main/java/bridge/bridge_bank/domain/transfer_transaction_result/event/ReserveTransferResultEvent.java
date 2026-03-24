@@ -2,6 +2,7 @@ package bridge.bridge_bank.domain.transfer_transaction_result.event;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public record ReserveTransferResultEvent(
         String transferTransactionGroupId,
@@ -38,7 +39,7 @@ public record ReserveTransferResultEvent(
         return new ReserveTransferResultEvent(
                 null, "FAIL", transferTransactionType,
                 transferAmount, senderAccountNumber, receiverAccountNumber,
-                LocalDateTime.now(), failReason
+                LocalDateTime.now(ZoneId.of("Asia/Seoul")), failReason
         );
     }
 }

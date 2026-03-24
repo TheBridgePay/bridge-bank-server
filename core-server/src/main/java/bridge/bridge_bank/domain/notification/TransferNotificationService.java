@@ -11,7 +11,9 @@ import bridge.bridge_bank.domain.transfer_transaction_result.event.ReserveTransf
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,15 +65,19 @@ public class TransferNotificationService {
 
     @Transactional(readOnly = true)
     public Page<TransferNotification> getNotifications(String accountNumber, Pageable pageable) {
-        return transferNotificationRepository
-                .findByAccountNumberOrderByCreatedAtDesc(accountNumber, pageable);
+        Pageable sorted = PageRequest.of(
+                pageable.getPageNumber(), pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "createdAt"));
+        return transferNotificationRepository.findByAccountNumber(accountNumber, sorted);
     }
 
     @Transactional(readOnly = true)
     public Page<TransferNotification> getUnreadNotifications(String accountNumber, Pageable pageable) {
-        return transferNotificationRepository
-                .findByAccountNumberAndStatusOrderByCreatedAtDesc(
-                        accountNumber, TransferNotificationStatus.UNREAD, pageable);
+        Pageable sorted = PageRequest.of(
+                pageable.getPageNumber(), pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "createdAt"));
+        return transferNotificationRepository.findByAccountNumberAndStatus(
+                accountNumber, TransferNotificationStatus.UNREAD, sorted);
     }
 
     @Transactional(readOnly = true)

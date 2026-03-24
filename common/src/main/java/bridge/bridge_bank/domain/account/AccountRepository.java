@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import org.springframework.data.repository.query.Param;
+
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -15,7 +17,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT a FROM Account a WHERE a.accountNumber = :accountNumber")
-    Optional<Account> getAccountByAccountNumberForUpdate(String accountNumber);
+    Optional<Account> getAccountByAccountNumberForUpdate(@Param("accountNumber") String accountNumber);
 
     @Modifying
     @Query(value = "update Account a " +
@@ -24,7 +26,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
             "when a.accountNumber=:receiverAccountNumber then :receiverNewBalance " +
             "end where a.accountNumber in (:senderAccountNumber, :receiverAccountNumber)")
     void updateBalanceBoth(
-            String senderAccountNumber, BigDecimal senderNewBalance,
-            String receiverAccountNumber, BigDecimal receiverNewBalance
+            @Param("senderAccountNumber") String senderAccountNumber,
+            @Param("senderNewBalance") BigDecimal senderNewBalance,
+            @Param("receiverAccountNumber") String receiverAccountNumber,
+            @Param("receiverNewBalance") BigDecimal receiverNewBalance
     );
 }

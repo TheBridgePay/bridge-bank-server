@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: bridge-bank-reserve-once-worker
@@ -28,3 +29,5 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 8081

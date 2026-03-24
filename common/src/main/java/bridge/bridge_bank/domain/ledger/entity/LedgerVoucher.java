@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,7 +35,7 @@ public class LedgerVoucher {
             TransferTransactionType transferTransactionType
     ) {
         return LedgerVoucher.builder()
-                .ledgerVoucherDate(LocalDateTime.now())
+                .ledgerVoucherDate(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
                 .transferTransactionGroupId(transferTransactionGroupId)
                 .transferTransactionType(transferTransactionType)
                 .build();

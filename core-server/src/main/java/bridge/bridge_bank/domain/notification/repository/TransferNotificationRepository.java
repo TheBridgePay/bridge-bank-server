@@ -12,10 +12,10 @@ import org.springframework.data.repository.query.Param;
 public interface TransferNotificationRepository
         extends JpaRepository<TransferNotification, Long> {
 
-    Page<TransferNotification> findByAccountNumberOrderByCreatedAtDesc(
+    Page<TransferNotification> findByAccountNumber(
             String accountNumber, Pageable pageable);
 
-    Page<TransferNotification> findByAccountNumberAndStatusOrderByCreatedAtDesc(
+    Page<TransferNotification> findByAccountNumberAndStatus(
             String accountNumber, TransferNotificationStatus status, Pageable pageable);
 
     long countByAccountNumberAndStatus(

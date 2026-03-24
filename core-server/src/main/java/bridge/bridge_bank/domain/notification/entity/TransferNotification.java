@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Table(indexes = {
@@ -60,7 +61,7 @@ public class TransferNotification {
                 .receiverAccountNumber(receiverAccountNumber)
                 .status(TransferNotificationStatus.UNREAD)
                 .failReason(failReason)
-                .createdAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
                 .build();
     }
 
@@ -78,12 +79,12 @@ public class TransferNotification {
                 .senderAccountNumber(senderAccountNumber)
                 .receiverAccountNumber(receiverAccountNumber)
                 .status(TransferNotificationStatus.UNREAD)
-                .createdAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
                 .build();
     }
 
     public void markAsRead() {
         this.status = TransferNotificationStatus.READ;
-        this.readAt = LocalDateTime.now();
+        this.readAt = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     }
 }

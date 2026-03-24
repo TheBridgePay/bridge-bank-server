@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Repository
@@ -24,7 +25,7 @@ public class TransferTransactionResultQueryRepository {
     public BigDecimal getYesterdaySumByTransferType(
             TransferTransactionType transferTransactionType
     ) {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
         LocalDateTime yesterdayStart = today.minusDays(1).atStartOfDay();
         LocalDateTime todayStart = today.atStartOfDay();
 

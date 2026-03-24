@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Repository
 @RequiredArgsConstructor
@@ -38,7 +39,7 @@ where v.ledger_voucher_date >= curdate() - interval 1 day
             TransferTransactionType transferTransactionType,
             LedgerEntryType ledgerEntryType
     ) {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
         LocalDateTime yesterdayStart = today.minusDays(1).atStartOfDay();
         LocalDateTime todayStart = today.atStartOfDay();
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class ReserveTransferExecutionService {
                     reserveOnceTransferSchedule.getTransferAmount(),
                     reserveOnceTransferSchedule.getSenderAccountNumber(),
                     reserveOnceTransferSchedule.getReceiverAccountNumber(),
-                    LocalDateTime.now()
+                    LocalDateTime.now(ZoneId.of("Asia/Seoul"))
             );
         } catch (Exception e) {
             log.error("reserve once transfer failed - schedule id -{}",
@@ -88,7 +89,7 @@ public class ReserveTransferExecutionService {
                     reserveRepeatTransferSchedule.getTransferAmount(),
                     reserveRepeatTransferSchedule.getSenderAccountNumber(),
                     reserveRepeatTransferSchedule.getReceiverAccountNumber(),
-                    LocalDateTime.now()
+                    LocalDateTime.now(ZoneId.of("Asia/Seoul"))
             );
         } catch (Exception e) {
             log.error("reserve repeat transfer failed - schedule id -{}",

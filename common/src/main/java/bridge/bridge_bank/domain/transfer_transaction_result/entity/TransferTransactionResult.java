@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -49,7 +50,7 @@ public class TransferTransactionResult {
             String otherAccountNumber
     ){
         return TransferTransactionResult.builder()
-                .transferTransactionDate(LocalDateTime.now())
+                .transferTransactionDate(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
                 .transferTransactionGroupId(transferTransactionGroupId)
                 .transferTransactionResultStatus(transferTransactionResultStatus)
                 .transferTransactionType(transferTransactionType)

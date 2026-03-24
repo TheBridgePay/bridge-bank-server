@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,9 +29,9 @@ public class ReserveOnceTransferScheduler {
     @Qualifier("asyncReserveTransferOnceExecutor")
     private final Executor asyncReserveTransferOnceExecutor;
 
-    @Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "*/30 * * * * *", zone = "Asia/Seoul")
     public void executeReserveOnceTransferExecution() {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         List<ReserveOnceTransferSchedule> schedules
                 = reserveOnceTransferScheduleService.getPendingReserveOnceTransferSchedules(now);
 
