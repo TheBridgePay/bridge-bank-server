@@ -7,6 +7,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_rrst_transfer_date_time",
+                columnList = "transferDateTime"),
+        @Index(name = "idx_rrst_sender_account",
+                columnList = "senderAccountNumber")
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder

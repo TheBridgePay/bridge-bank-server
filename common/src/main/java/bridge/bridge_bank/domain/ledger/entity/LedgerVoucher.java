@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_lv_type_date",
+                columnList = "transferTransactionType, ledgerVoucherDate")
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder

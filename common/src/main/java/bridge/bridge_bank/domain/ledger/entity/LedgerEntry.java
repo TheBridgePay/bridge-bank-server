@@ -6,6 +6,10 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_le_voucher_type",
+                columnList = "ledgerVoucherId, ledgerEntryType")
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder

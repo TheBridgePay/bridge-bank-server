@@ -8,6 +8,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_ttr_self_account_date",
+                columnList = "selfAccountNumber, transferTransactionDate DESC"),
+        @Index(name = "idx_ttr_type_date",
+                columnList = "transferTransactionType, transferTransactionDate")
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder

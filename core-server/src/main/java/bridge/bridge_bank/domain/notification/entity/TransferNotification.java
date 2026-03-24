@@ -9,8 +9,10 @@ import java.time.ZoneId;
 
 @Entity
 @Table(indexes = {
-        @Index(name = "idx_notification_account_status",
-                columnList = "accountNumber, status")
+        @Index(name = "idx_notification_account_status_created",
+                columnList = "accountNumber, status, createdAt DESC"),
+        @Index(name = "idx_notification_account_created",
+                columnList = "accountNumber, createdAt DESC")
 })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
