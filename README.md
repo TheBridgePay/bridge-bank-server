@@ -533,10 +533,14 @@ renewReserveRepeatTransferSchedule()
 클라이언트 → GET /api/accounts/{accountNumber}/transfer-results
          → TransferTransactionResultController.getTransferResults()
          → TransferTransactionResultService.get10TransferTransactionResults()
-         → (현재 미구현 - null 반환)
+         → TransferTransactionResultQueryRepository.get10TransferTransactionResults()
+         → 200 OK + List<TransferTransactionResultResponse>
 ```
 
-> **TODO**: 아직 구현되지 않은 기능이다. 리포지토리 쿼리와 서비스 로직 구현이 필요하다.
+**흐름:**
+1. 클라이언트가 계좌번호로 거래 내역을 요청한다. 선택적으로 `receiverAccountNumber`, `transferTransactionType` 필터를 지정할 수 있다.
+2. QueryDSL 동적 쿼리로 `selfAccountNumber` 일치 조건에 선택적 필터를 추가한다.
+3. `transferTransactionDate DESC`로 정렬하여 최근 10건을 반환한다.
 
 ---
 
