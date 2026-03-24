@@ -42,4 +42,6 @@ out/
 ### Docs ###
 docs/
 
+.claude/
+
 nul

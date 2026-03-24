@@ -29,7 +29,7 @@ public class ReserveRepeatTransferScheduler {
     @Qualifier("asyncReserveTransferRepeatExecutor")
     private final Executor asyncReserveTransferRepeatExecutor;
 
-    @Scheduled(cron = "*/30 * * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "*/10 * * * * *", zone = "Asia/Seoul")
     public void executeReserveRepeatTransferExecution() {
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         List<ReserveRepeatTransferSchedule> schedules
