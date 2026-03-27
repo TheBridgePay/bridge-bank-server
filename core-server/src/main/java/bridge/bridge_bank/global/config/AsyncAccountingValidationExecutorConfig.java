@@ -13,7 +13,7 @@ public class AsyncAccountingValidationExecutorConfig {
     @Bean(name = "asyncAccountingValidationExecutor")
     public Executor asyncAccountingValidationExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(3);          // 기본 워커 수
+        executor.setCorePoolSize(0);          // 기본 워커 수
         executor.setMaxPoolSize(3);           // 최대 워커 수
         executor.setQueueCapacity(18);       // 대기 큐
         executor.setThreadNamePrefix("accounting-validation-worker-");

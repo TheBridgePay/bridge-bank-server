@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -24,7 +25,7 @@ public class AccountingValidationService {
     private final TransferTransactionResultQueryRepository transferTransactionResultQueryRepository;
     private final LedgerQueryRepository ledgerQueryRepository;
 
-    public void validateYesterdayAccountingByTransferType(TransferTransactionType transferTransactionType) {
+    public Boolean validateYesterdayAccountingByTransferType(TransferTransactionType transferTransactionType) {
         CompletableFuture<BigDecimal> ledgerDebitSumFuture = CompletableFuture.supplyAsync(
                 () -> getYesterdayLedgerSumByTransferTypeAndLedgerType(transferTransactionType, LedgerEntryType.DEBIT),
                 asyncAccountingValidationExecutor
@@ -37,7 +38,7 @@ public class AccountingValidationService {
                 () -> getYesterdayTransactionSumByTransferType(transferTransactionType),
                 asyncAccountingValidationExecutor
         );
-        CompletableFuture.allOf(ledgerDebitSumFuture,ledgerCreditSumFuture,transactionSumFuture).join();
+        CompletableFuture.allOf(ledgerDebitSumFuture, ledgerCreditSumFuture, transactionSumFuture).join();
 
         BigDecimal ledgerDebitSum = ledgerDebitSumFuture.join();
         BigDecimal ledgerCreditSum = ledgerCreditSumFuture.join();
@@ -53,7 +54,7 @@ public class AccountingValidationService {
                     + "\nDEBIT TYPE 합: " + ledgerDebitSum
                     + "\nCREDIT TYPE 합: " + ledgerCreditSum
             );
-            return;
+            return false;
         }
 
         if (ledgerCreditSum.compareTo(transactionSum) != 0) {//이체합계값 대변 합 안 맞음 ;;;;
@@ -65,10 +66,12 @@ public class AccountingValidationService {
                     + "\nTRANSACTION TYPE 합: " + transactionSum
                     + "\nLEDGER TYPE 합: " + ledgerCreditSum
             );
-            return;
+            return false;
         }
 
         log.info(transferTransactionType.name() + " 타입 정합성 검증 성공, 거래내역 합: " + transactionSum + "\nDEBIT TYPE 합: " + ledgerDebitSum + "\nCREDIT TYPE 합: " + ledgerCreditSum);
+
+        return true;
     }
 
     private BigDecimal getYesterdayTransactionSumByTransferType(TransferTransactionType transferTransactionType) {
@@ -79,5 +82,10 @@ public class AccountingValidationService {
         return ledgerQueryRepository.getYesterdaySumByTransferTypeAndLedgerType(transferTransactionType, ledgerEntryType);
     }
 
+    /*public void checkError(List<Boolean> validationResults) {
+        for(Boolean validationResult : validationResults) {
 
+        }
+
+    }*/
 }
